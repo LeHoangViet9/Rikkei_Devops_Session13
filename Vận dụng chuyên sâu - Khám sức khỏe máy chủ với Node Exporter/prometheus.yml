@@ -1,0 +1,11 @@
+scrape_configs:
+  # Cấu hình cũ của bạn (ví dụ Spring Boot Actuator)
+  # - job_name: 'spring-boot-app'
+  # ...
+
+  # Block cấu hình mới cho Node Exporter
+  - job_name: 'node-exporter'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['node-exporter:9100'] 
+      # Sử dụng tên container 'node-exporter' nếu Prometheus và Node Exporter chạy chung mạng Docker (monitoring_network)

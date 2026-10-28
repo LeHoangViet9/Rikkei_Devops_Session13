@@ -1,0 +1,23 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        # Chỉ phơi bày các endpoint thực sự cần thiết (ở đây là prometheus và health)
+        include: prometheus, health
+        # Loại trừ rõ ràng các endpoint nguy hiểm (thường không cần thiết vì mặc định đã đóng, 
+        # nhưng khai báo thêm để chắn chắn và tuân thủ strict security)
+        exclude: env, shutdown
+
+  # (Tuỳ chọn) Bật thêm thông tin chi tiết cho endpoint /health
+  endpoint:
+    health:
+      show-details: always
+    # Đảm bảo endpoint shutdown luôn bị tắt ở mức hệ thống
+    shutdown:
+      enabled: false
+
+  # Cấu hình cụ thể cho metrics
+  metrics:
+    tags:
+      # Gắn tag tên ứng dụng vào mọi metrics để dễ phân biệt trên Grafana/Prometheus sau này
+      application: e-commerce-backend

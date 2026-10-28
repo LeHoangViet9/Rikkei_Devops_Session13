@@ -1,0 +1,9 @@
+dependencies {
+    // ... các dependencies khác của dự án
+
+    // Kích hoạt Spring Boot Actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    
+    // Format metrics sang chuẩn của Prometheus
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+}

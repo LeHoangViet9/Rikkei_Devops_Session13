@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  ecommerce-api:
+    # Thay 'your-image-name' bằng tên image thực tế của bạn
+    image: your-image-name:latest 
+    container_name: ecommerce-api
+    # Không map ports ra ngoài host để giấu kín API, chỉ cho phép nội bộ mạng Docker truy cập
+    networks:
+      - monitoring_network
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090" # Mở port 9090 để Dev xem dashboard
+    volumes:
+      # Bind mount file cấu hình từ Host vào Container (quyền Read-Only)
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.enable-lifecycle' # Cờ bắt buộc để bật tính năng reload qua API
+    networks:
+      - monitoring_network
+
+networks:
+  monitoring_network:
+    driver: bridge
